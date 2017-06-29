@@ -1,0 +1,8 @@
+QWidget#Test
+{
+/*  background-color:rgba(0,0,0,0);*/
+}
+QLineEdit#RegExpLineEdit
+{
+  border-bottom:1px solid #000;
+}

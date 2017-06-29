@@ -1,0 +1,33 @@
+QTextEdit#RuleTextEdit
+{
+background: qradialgradient(cx: 1.2, cy: 0.2,
+fx: 1.2, fy: 0.2,
+radius: 1.5, stop: 0 #E7E9BB, stop: 1 #403B4A);
+
+background: qradialgradient(cx: 0.5, cy: -0.8,
+fx: 0.5, fy: -2.8,
+radius: 2.5, stop: 0 #384672, stop: 1 #253050);
+}
+
+QTextEdit#MessageTextEdit
+{
+
+
+background:qlineargradient(x1:1, y1:0, x2:0, y2:0,
+stop:0 #141E30, stop:1 #203349);
+
+background: qradialgradient(cx: 1.2, cy: -0.8,
+fx: -1.2, fy: -1.8,
+/*radius: 2.5, stop: 0 #273051, stop: 1 #2b3559);*/
+/*radius: 2.5, stop: 0 #3d476d, stop: 1 #2a345c);*/
+radius: 2.5, stop: 0 #1c2541, stop: 1 #253050);
+}
+
+QTextEdit#ResultTextEdit
+{
+background: qradialgradient(cx: -0.2, cy: 0.8,
+fx: -1.2, fy: -1.8,
+/*radius: 2.5, stop: 0 #273051, stop: 1 #2b3559);*/
+/*radius: 2.5, stop: 0 #3d476d, stop: 1 #2a345c);*/
+radius: 2.5, stop: 0 #2b365c, stop: 1 #181f35);
+}
