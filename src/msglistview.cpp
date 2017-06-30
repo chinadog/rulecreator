@@ -18,10 +18,30 @@ MsgListView::~MsgListView()
 void MsgListView::deleteSelectedMsgWindow()
 {
     QModelIndexList indexes = selectionModel()->selectedIndexes();
-    qDebug() << indexes;
     for(int i=0;i<indexes.size();i++)
     {
         m_messageModel->removeRow(indexes[i].row());
+    }
+}
+
+void MsgListView::lowerSelectionOneStep()
+{
+    QModelIndexList indexes = selectionModel()->selectedIndexes();
+    for(int i=0;i<indexes.size();i++)
+    {
+        int row = indexes[i].row();
+        m_messageModel->lowerOneStep(row);
+        setCurrentIndex(m_messageModel->index(row+1));
+    }
+}
+
+void MsgListView::raiseSelectionOneStep()
+{
+    QModelIndexList indexes = selectionModel()->selectedIndexes();
+    for(int i=0;i<indexes.size();i++)
+    {
+        m_messageModel->raiseOneStep(indexes[i].row());
+        setCurrentIndex(m_messageModel->index(indexes[i].row()-1));
     }
 }
 
@@ -33,6 +53,11 @@ void MsgListView::showContextMenu(const QPoint &pos)
     // Create menu and insert some actions
     Menu myMenu;
 
+    myMenu.addAction(tr("Raise selection one step"),  this, SLOT(raiseSelectionOneStep()));
+    myMenu.actions().last()->setToolTip(tr("Add new event"));
+    myMenu.addAction(tr("Lower selection one step"),  this, SLOT(lowerSelectionOneStep()));
+    myMenu.actions().last()->setToolTip(tr("Add new event"));
+    myMenu.addSeparator();
     myMenu.addAction(tr("Add new event"),  this, SLOT(showAddNewMsgWindow()));
     myMenu.actions().last()->setToolTip(tr("Add new event"));
     myMenu.addSeparator();

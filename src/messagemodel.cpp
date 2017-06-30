@@ -21,6 +21,30 @@ Event MessageModel::getEvent(const QModelIndex &index)
     return Event();
 }
 
+bool MessageModel::lowerOneStep(int row)
+{
+    if(row >= 0 && row < m_values.size()-1)
+    {
+        m_values.insert(row+2, m_values[row]);
+        m_values.removeAt(row);
+        emit dataChanged(index(row,0),index(row+1,0));
+        return true;
+    }
+    return false;
+}
+
+bool MessageModel::raiseOneStep(int row)
+{
+    if(row > 0 && row < m_values.size())
+    {
+        m_values.insert(row-1, m_values[row]);
+        m_values.removeAt(row+1);
+        emit dataChanged(index(row-1,0),index(row,0));
+        return true;
+    }
+    return false;
+}
+
 bool MessageModel::removeRow(int row, const QModelIndex &parent)
 {
     Q_UNUSED(parent)
