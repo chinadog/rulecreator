@@ -53,6 +53,7 @@ HEADERS  += \
   $$PWD/src/menu.h \
   $$PWD/src/msgeditwidget.h
 
+
 DESTDIR = $$PWD/build/bin/
 MOC_DIR = $$PWD/build/bin/
 OBJECTS_DIR = $$PWD/build/bin/
