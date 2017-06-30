@@ -34,10 +34,10 @@ SOURCES += \
   $$PWD/src/codetextedit.cpp \
   $$PWD/src/rulewidget.cpp \
   $$PWD/src/regexpwidget.cpp \
-    src/messagemodel.cpp \
-    src/msglistview.cpp \
-    src/menu.cpp \
-    src/msgeditwidget.cpp
+  $$PWD/src/messagemodel.cpp \
+  $$PWD/src/msglistview.cpp \
+  $$PWD/src/menu.cpp \
+  $$PWD/src/msgeditwidget.cpp
 
 HEADERS  += \
   $$PWD/src/rulecreator.h \
@@ -48,10 +48,10 @@ HEADERS  += \
   $$PWD/src/codetextedit.h \
   $$PWD/src/rulewidget.h \
   $$PWD/src/regexpwidget.h \
-    src/messagemodel.h \
-    src/msglistview.h \
-    src/menu.h \
-    src/msgeditwidget.h
+  $$PWD/src/messagemodel.h \
+  $$PWD/src/msglistview.h \
+  $$PWD/src/menu.h \
+  $$PWD/src/msgeditwidget.h
 
 DESTDIR = $$PWD/build/bin/
 MOC_DIR = $$PWD/build/bin/
@@ -69,7 +69,7 @@ DEFINES += RESOURCES_PATH=\\\"$$RESOURCES_PATH\\\"
 PKG_CONFIG_LIBDIR  = $$PREFIX/share/pkgconfig
 PKG_CONFIG_LIBDIR += $$system(pkg-config --variable pc_path pkg-config)
 
-PKGCONFIG += TLogger TRules Common
+PKGCONFIG += TLogger TRules Common TDB
 
 # installs
 target.path     = $$PREFIX/bin
