@@ -4,8 +4,11 @@
 #include "rulewidget.h"
 #include <QAbstractTextDocumentLayout>
 #include <QDebug>
+#include <QJsonDocument>
 #include <QPainter>
 #include "menu.h"
+#include <QJsonObject>
+#include <QJsonArray>
 
 //===================================================================================================================//
 //                                                RULE WIDGET
@@ -89,9 +92,29 @@ QString RuleWidget::rulesText() const
     return m_rulesTextEdit->toPlainText();
 }
 
-QString RuleWidget::msgText() const
+QJsonArray RuleWidget::msgText() const
 {
-    return "m_msgTextEdit->toPlainText()";
+    QJsonArray result;
+    for(int i=0;i<m_msgListView->model()->rowCount();i++)
+    {
+        Event event = m_msgListView->getEvent(i);
+        QJsonObject obj;
+        obj["id"] = event.id;
+        obj["time"] = event.time.toMSecsSinceEpoch();
+        obj["msg"] = event.msg;
+        result.append(obj);
+    }
+    return result;
+}
+
+QString RuleWidget::mrfToText() const
+{
+    QJsonObject obj;
+    obj["rule"] = m_rulesTextEdit->toPlainText();
+    obj["events"] = msgText();
+    QJsonDocument doc(obj);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+    return strJson;
 }
 
 void RuleWidget::setRulesText(const QString &value)
@@ -101,7 +124,23 @@ void RuleWidget::setRulesText(const QString &value)
 
 void RuleWidget::setMsgText(const QString &/*value*/)
 {
-//    m_msgTextEdit->setText(value);
+    //    m_msgTextEdit->setText(value);
+}
+
+void RuleWidget::textToMrf(const QString &text)
+{
+    QJsonObject obj = QJsonDocument::fromJson(text.toUtf8()).object();
+    m_rulesTextEdit->setText( obj["rule"].toString() );
+    QJsonArray array = obj["events"].toArray();
+    for(int i=0;i<array.count();i++)
+    {
+        QJsonObject eventObj = array[i].toObject();
+        Event e;
+        e.id = eventObj["id"].toInt();
+        e.msg = eventObj["msg"].toString();
+        e.time = QDateTime::fromMSecsSinceEpoch( eventObj["time"].toInt() );
+        m_msgListView->addEvent(e);
+    }
 }
 
 void RuleWidget::setStartValues()

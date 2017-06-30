@@ -3,13 +3,13 @@
 
 MessageModel::MessageModel()
 {
-    Event ev;
-    ev.msg = "TEST1";
-    ev.time = QDateTime::currentDateTime();
-    m_values.push_back(ev);
-    ev.msg = "TEST2";
-    ev.time = QDateTime::currentDateTime();
-    m_values.push_back(ev);
+//    Event ev;
+//    ev.msg = "TEST1";
+//    ev.time = QDateTime::currentDateTime();
+//    m_values.push_back(ev);
+//    ev.msg = "TEST2";
+//    ev.time = QDateTime::currentDateTime();
+//    m_values.push_back(ev);
 }
 
 Event MessageModel::getEvent(const QModelIndex &index)

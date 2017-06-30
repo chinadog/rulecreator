@@ -23,9 +23,11 @@ public:
     ~RuleWidget();
 
     QString rulesText() const;
-    QString msgText() const;
+    QJsonArray msgText() const;
+    QString mrfToText() const;
     void setRulesText(const QString& value);
     void setMsgText(const QString& value);
+    void textToMrf(const QString& text);
 private:
     // Виджеты
     CodeTextEdit* m_rulesTextEdit;

@@ -55,8 +55,8 @@ HEADERS  += \
 
 
 DESTDIR = $$PWD/build/bin/
-MOC_DIR = $$PWD/build/bin/
-OBJECTS_DIR = $$PWD/build/bin/
+MOC_DIR = $$PWD/build/moc/
+OBJECTS_DIR = $$PWD/build/obj/
 
 isEmpty(PREFIX) {
     PREFIX=$$PWD

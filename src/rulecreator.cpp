@@ -7,6 +7,7 @@
 #include <TRules/TRules>
 #include <fstream>
 #include "rulecreator.h"
+#include <QDebug>
 
 //===================================================================================================================//
 //                                                  INFO WIDGET
@@ -208,30 +209,15 @@ void RuleCreator::openTab(const QString &fileName)
     RuleWidget* currentTab = createNewTab();
     std::ifstream f;
     f.open(fileName.toStdString(), std::ios::in);
-    QString rulesText;
-    QString msgText;
     std::string str;
-    bool msgBlock = false;
-    while(std::getline(f, str))
-    {
-        if(str == "[MSG BLOCK]")
-        {
-            msgBlock = true;
-            rulesText.remove(rulesText.size()-1,1);
-        }
-        if(msgBlock == false)
-        {
-            rulesText += QString::fromStdString(str+"\n");
-        }
-        else if(str != "[MSG BLOCK]")
-        {
-            msgText += QString::fromStdString(str+"\n");
-        }
+    f.seekg(0, std::ios::end);
+    str.reserve(f.tellg());
+    f.seekg(0, std::ios::beg);
 
-    }
-    msgText.remove(msgText.size()-1,1);
-    currentTab->setRulesText( rulesText );
-    currentTab->setMsgText( msgText );
+    str.assign((std::istreambuf_iterator<char>(f)),
+                std::istreambuf_iterator<char>());
+    QString mrfString = QString::fromStdString(str);
+    currentTab->textToMrf(mrfString);
     f.close();
     QString tabName = fileName.right( fileName.size() - fileName.lastIndexOf('/') -1 );
     m_tabWidget->setTabToolTip( m_tabWidget->currentIndex(), fileName );
@@ -246,9 +232,7 @@ void RuleCreator::saveCurrentTabAs()
     RuleWidget* currentTab = static_cast<RuleWidget*>(m_tabWidget->currentWidget());
     std::ofstream f;
     f.open(fileName.toStdString(), std::ios::trunc);
-    f << currentTab->rulesText().toStdString();
-    f << "\n[MSG BLOCK]\n";
-    f << currentTab->msgText().toStdString();
+    f << currentTab->mrfToText().toStdString();
     f.close();
 }
 

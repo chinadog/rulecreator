@@ -13,6 +13,9 @@ class MsgListView : public QListView
 public:
     explicit MsgListView(QWidget *parent = 0);
     ~MsgListView();
+
+    void addEvent(const Event& event);
+    Event getEvent(int row) const;
 private:
     MessageModel* m_messageModel;
 signals:

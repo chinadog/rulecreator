@@ -15,8 +15,8 @@ public:
     bool raiseOneStep(int row);
     bool removeRow(int row, const QModelIndex &parent = QModelIndex());
     bool updateRow(const Event &event, int row);
-protected:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+protected:    
     QVariant data(const QModelIndex &index, int role) const override;
 private:
     QList<Event> m_values;

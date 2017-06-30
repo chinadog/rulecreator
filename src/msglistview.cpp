@@ -15,6 +15,16 @@ MsgListView::~MsgListView()
     delete m_messageModel;
 }
 
+void MsgListView::addEvent(const Event &event)
+{
+    m_messageModel->addRow(event);
+}
+
+Event MsgListView::getEvent(int row) const
+{
+    return m_messageModel->getEvent(m_messageModel->index(row));
+}
+
 void MsgListView::deleteSelectedMsgWindow()
 {
     QModelIndexList indexes = selectionModel()->selectedIndexes();
@@ -31,7 +41,10 @@ void MsgListView::lowerSelectionOneStep()
     {
         int row = indexes[i].row();
         m_messageModel->lowerOneStep(row);
-        setCurrentIndex(m_messageModel->index(row+1));
+        if(row != m_messageModel->rowCount()-1)
+        {
+            setCurrentIndex(m_messageModel->index(row+1));
+        }
     }
 }
 
@@ -40,8 +53,12 @@ void MsgListView::raiseSelectionOneStep()
     QModelIndexList indexes = selectionModel()->selectedIndexes();
     for(int i=0;i<indexes.size();i++)
     {
-        m_messageModel->raiseOneStep(indexes[i].row());
-        setCurrentIndex(m_messageModel->index(indexes[i].row()-1));
+        int row = indexes[i].row();
+        m_messageModel->raiseOneStep(row);
+        if(row != 0)
+        {
+            setCurrentIndex(m_messageModel->index(indexes[i].row()-1));
+        }
     }
 }
 
