@@ -1,4 +1,5 @@
 #include "msglistview.h"
+#include <QDebug>
 
 MsgListView::MsgListView(QWidget *parent) : QListView(parent)
 {
@@ -14,6 +15,16 @@ MsgListView::~MsgListView()
     delete m_messageModel;
 }
 
+void MsgListView::deleteSelectedMsgWindow()
+{
+    QModelIndexList indexes = selectionModel()->selectedIndexes();
+    qDebug() << indexes;
+    for(int i=0;i<indexes.size();i++)
+    {
+        m_messageModel->removeRow(indexes[i].row());
+    }
+}
+
 void MsgListView::showContextMenu(const QPoint &pos)
 {
     // Handle global position
@@ -22,8 +33,11 @@ void MsgListView::showContextMenu(const QPoint &pos)
     // Create menu and insert some actions
     Menu myMenu;
 
-    myMenu.addAction(tr("Add new msg"),  this, SLOT(showAddNewMsgWindow()));
-    myMenu.actions().last()->setToolTip(tr("Add new msg"));
+    myMenu.addAction(tr("Add new event"),  this, SLOT(showAddNewMsgWindow()));
+    myMenu.actions().last()->setToolTip(tr("Add new event"));
+    myMenu.addSeparator();
+    myMenu.addAction(tr("Delete event"),  this, SLOT(deleteSelectedMsgWindow()));
+    myMenu.actions().last()->setToolTip(tr("Delete this event"));
 
     // Show context menu at handling position
     myMenu.exec(globalPos);

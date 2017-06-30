@@ -21,6 +21,19 @@ Event MessageModel::getEvent(const QModelIndex &index)
     return Event();
 }
 
+bool MessageModel::removeRow(int row, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+    if(row >= 0 && row < m_values.size())
+    {
+        beginRemoveRows(QModelIndex(), row, row);
+        m_values.removeAt(row);
+        endRemoveRows();
+        return true;
+    }
+    return false;
+}
+
 bool MessageModel::addRow(const Event &value, int row)
 {
     if(row > m_values.size())

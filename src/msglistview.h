@@ -18,6 +18,7 @@ private:
 signals:
 
 public slots:
+    void deleteSelectedMsgWindow();
     void showContextMenu(const QPoint &pos);
     void showAddNewMsgWindow();
     void showMsgEditWindow(const QModelIndex &index);
