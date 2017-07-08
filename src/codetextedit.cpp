@@ -263,7 +263,7 @@ void CodeTextEdit::keyPressEvent(QKeyEvent *e)
         }
         else if( strWord == "concat" )
         {
-            toolTipText = "concat: str1, str2, ..., strN, var";
+            toolTipText = "concat: var, str1, str2, ..., strN";
         }
         else if( strWord == "eventlog" )
         {

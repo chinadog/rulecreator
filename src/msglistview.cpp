@@ -25,6 +25,16 @@ Event MsgListView::getEvent(int row) const
     return m_messageModel->getEvent(m_messageModel->index(row));
 }
 
+QList<Event> MsgListView::getEvents() const
+{
+    QList<Event> events;
+    for(int i=0;i<m_messageModel->rowCount();i++)
+    {
+        events << getEvent(i);
+    }
+    return events;
+}
+
 void MsgListView::deleteSelectedMsgWindow()
 {
     QModelIndexList indexes = selectionModel()->selectedIndexes();

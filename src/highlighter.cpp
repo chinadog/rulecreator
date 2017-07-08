@@ -9,7 +9,8 @@ Highlighter::Highlighter(QTextDocument *parent)
     keywordFormat.setForeground(QColor("#22AE0F"));
     QStringList keywordPatterns;
     keywordPatterns << "\\bfind\\b" << "\\bfindprev\\b" << "\\bregexp\\b" <<
-                       "\\bset\\b" << "\\blog\\b" << "\\bconcat\\b" << "\\eventlog\\b";
+                       "\\bset\\b" << "\\blog\\b" << "\\bconcat\\b" <<
+                       "\\eventlog\\b" << "\\bdebug\\b";
     foreach (const QString &pattern, keywordPatterns) {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;

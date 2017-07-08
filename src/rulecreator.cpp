@@ -162,6 +162,7 @@ RuleWidget* RuleCreator::createNewTab()
         m_infoWidget->setVisible(false);
         m_tabWidget->setVisible(true);
     }
+    connect(newTab,SIGNAL(parseExeced()),this,SLOT(parseMessage()));
     return newTab;
 }
 

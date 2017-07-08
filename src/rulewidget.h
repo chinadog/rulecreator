@@ -32,7 +32,7 @@ private:
     // Виджеты
     CodeTextEdit* m_rulesTextEdit;
     MsgListView* m_msgListView;
-    MessageModel* m_messageModel;
+//    MessageModel* m_messageModel;
     QTextEdit* m_resultTextEdit;
     QPushButton* m_parseButton;
     Highlighter* m_highlighter;
@@ -40,6 +40,7 @@ private:
     QLabel* m_colPosLabel;
     QStatusBar* m_statusBar;
     // Методы
+    bool eventFilter(QObject *obj, QEvent *event) override;
     void initInterface();
     void initConnections();
     void setStartValues();
@@ -49,6 +50,8 @@ private slots:
 public slots:
     void execRule();
     void parseMessage();
+signals:
+    void parseExeced();
 };
 
 #endif // RULEWIDGET_H

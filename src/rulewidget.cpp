@@ -25,7 +25,7 @@ RuleWidget::RuleWidget(QWidget* parent) : QWidget(parent)
 
 RuleWidget::~RuleWidget()
 {
-    delete m_messageModel;
+
 }
 
 //-----Методы--------------------------------------------------------------------------------------------------------//
@@ -79,6 +79,7 @@ void RuleWidget::initInterface()
     m_resultTextEdit->setPlaceholderText(tr("Result"));
     int fontWidth = QFontMetrics(m_rulesTextEdit->currentCharFormat().font()).averageCharWidth();
     m_rulesTextEdit->setTabStopWidth( 3 * fontWidth ); //Устанвока ширины табуляции
+    m_rulesTextEdit->installEventFilter(this);
 }
 
 void RuleWidget::initConnections()
@@ -138,9 +139,28 @@ void RuleWidget::textToMrf(const QString &text)
         Event e;
         e.id = eventObj["id"].toInt();
         e.msg = eventObj["msg"].toString();
-        e.time = QDateTime::fromMSecsSinceEpoch( eventObj["time"].toInt() );
+        e.time = QDateTime::fromMSecsSinceEpoch( eventObj["time"].toVariant().toLongLong() );
         m_msgListView->addEvent(e);
     }
+}
+
+bool RuleWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == m_rulesTextEdit)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+             QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+             if(keyEvent->key() == Qt::Key_R &&
+                keyEvent->modifiers() & Qt::ControlModifier)
+             {
+                qDebug() << event->type();
+                emit parseExeced();
+                return true;
+             }
+        }
+    }
+    return QWidget::eventFilter(obj, event);
 }
 
 void RuleWidget::setStartValues()
@@ -207,6 +227,19 @@ void RuleWidget::parseMessage()
 //    }
 //    TDEBUG() << rule;
 //    TINFO() << rule.exec(msgText,100);
+    qDebug() << "start parse";
+    Rules rule;
+    QList<Event> events = m_msgListView->getEvents();
+    rule.setRules(m_rulesTextEdit->toPlainText());
+    m_resultTextEdit->clear();
+    QString debugText;
+    for(int i=0;i<events.size();i++)
+    {
+        QString debug;
+        rule.exec(events[i], &debug);
+        debugText += debug + "\n";
+    }
+    m_resultTextEdit->setText(debugText);
 }
 
 

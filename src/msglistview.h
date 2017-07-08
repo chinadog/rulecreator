@@ -16,6 +16,7 @@ public:
 
     void addEvent(const Event& event);
     Event getEvent(int row) const;
+    QList<Event> getEvents() const;
 private:
     MessageModel* m_messageModel;
 signals:
