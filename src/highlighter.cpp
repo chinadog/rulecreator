@@ -10,7 +10,7 @@ Highlighter::Highlighter(QTextDocument *parent)
     QStringList keywordPatterns;
     keywordPatterns << "\\bfind\\b" << "\\bfindprev\\b" << "\\bregexp\\b" <<
                        "\\bset\\b" << "\\blog\\b" << "\\bconcat\\b" <<
-                       "\\eventlog\\b" << "\\bdebug\\b";
+                       "\\eventlog\\b" << "\\bdebug\\b" << "\\bcontinue\\b";
     foreach (const QString &pattern, keywordPatterns) {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
